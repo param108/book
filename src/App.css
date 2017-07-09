@@ -1,0 +1,17 @@
+body {
+  background-image: url('/img/paperBackground.png');
+}
+
+.desktop {
+  margin-left: 20%;
+  max-width: 60%;
+}
+
+.mobile {
+  margin-left: 5%;
+  max-width: 90%;
+}
+.App {
+  font-family: 'Special Elite', cursive;
+  font-size: 40px;
+}

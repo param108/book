@@ -8,19 +8,27 @@ class Page extends Component {
     this.getChapter = this.getChapter.bind(this);
     this.getError = this.getError.bind(this);
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.clickPrev = this.clickPrev.bind(this);
+    this.clickNext = this.clickNext.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
-    /*fetch(this.props.url+this.state.chapter,{
-      method:'GET',
-      headers: {
-        'Accept': 'application/json',
-      }
-    }).then((response) => (response.json()))
-    .then((jsonResponse) => (this.setState({data:jsonResponse.data, hasPrev: jsonResponse.hasPrev, hasNext: jsonResponse.hasNext})))
-    .catch((error) => {
-      this.setState({ fail: true, msg: error })
-    });*/
+    if (prevState.chapter != this.state.chapter) {
+      console.log(prevState.chapter,this.state.chapter);
+      fetch('/read/'+this.state.story+'/chapter/'+this.state.chapter+'/?_r='+Math.random().toString(36).substring(15),{
+        method:'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      }).then((response) => (response.json()))
+      .then((jsonResponse) => {
+        window.location.hash='#'+this.state.chapter;
+        this.setState({data:jsonResponse.data, hasPrev: jsonResponse.hasPrev, hasNext: jsonResponse.hasNext});
+      })
+      .catch((error) => {
+        this.setState({ fail: true, msg: error })
+      });
+    }
   }
 
   getChapter() {
@@ -45,15 +53,15 @@ class Page extends Component {
     var path = window.location.pathname;
     var hash = window.location.hash;
     if (hash === "") {
-	hash = "1";
+	     hash = "1";
+       window.location.hash='#1';
     } else {
-	hash = hash.replace("#","");
+	     hash = hash.replace("#","");
     }
     var pathElements = path.split("/");
-    console.log(pathElements)
     var story = pathElements[2];
     var url = '/read/'+story+'/chapter/'+hash;
-    fetch(url,{
+    fetch(url+'/?_r='+Math.random().toString(36).substring(15),{
       method:'GET',
       headers: {
         'Accept': 'application/json',
@@ -65,20 +73,30 @@ class Page extends Component {
     });
   }
 
+  clickPrev() {
+    this.setState({chapter: (this.state.chapter - 1)});
+    return false;
+  }
+
+  clickNext() {
+    this.setState({chapter: (this.state.chapter + 1)});
+    return false;
+  }
+
   render() {
     if (this.state.fail) {
       return (
-        <div className="Page" id="Page" dangerouslySetInnerHTML={this.getError()}>
+        <div className={this.props.pagestyle} id="Page" dangerouslySetInnerHTML={this.getError()}>
         </div>
       )
     } else {
       return (
         <div>
-        <div className="Page" id="Page" dangerouslySetInnerHTML={this.getChapter()}>
+        <div className={this.props.pagestyle} id="Page" dangerouslySetInnerHTML={this.getChapter()}>
         </div>
         <div style={ {position: 'fixed', left: '80%', top:'20px'} } className="Buttons" id="Buttons">
-          {(this.state.hasPrev)?<a><img height='50px' src="/static/img/backward.png"/></a>:null}
-          {(this.state.hasNext)?<a><img height='50px' src="/static/img/forward.png"/></a>:null}
+          {(this.state.hasPrev)?<a onClick={this.clickPrev}><img height='50px' src="/static/img/backward.png"/></a>:null}
+          {(this.state.hasNext)?<a onClick={this.clickNext}><img height='50px' src="/static/img/forward.png"/></a>:null}
         </div>
         </div>
       );

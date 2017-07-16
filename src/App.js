@@ -14,12 +14,12 @@ class App extends Component {
       <div>
       <Default>
       <div className="App desktop">
-      < Page url='/reasons/'/>
+      < Page url='/reasons/' pagestyle='Page-desktop'/>
       </div>
       </Default>
       <Mobile>
-      <div className="App mobile">
-      < Page url='/reasons/'/>
+      <div className="App mobile" >
+      < Page url='/reasons/' pagestyle='Page-mobile' />
       </div>
       </Mobile>
       </div>

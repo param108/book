@@ -5,13 +5,15 @@ body {
 .desktop {
   margin-left: 20%;
   max-width: 60%;
+  font-size: 40px;
 }
 
 .mobile {
   margin-left: 5%;
   max-width: 90%;
+  font-size: 20px;
+
 }
 .App {
   font-family: 'Special Elite', cursive;
-  font-size: 40px;
 }

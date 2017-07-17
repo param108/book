@@ -90,11 +90,15 @@ class Page extends Component {
         </div>
       )
     } else {
+      let classname = "ButtonsDesktop";
+      if (this.props.pagestyle === "Page-mobile") {
+        classname = "ButtonsMobile";
+      }
       return (
         <div>
         <div className={this.props.pagestyle} id="Page" dangerouslySetInnerHTML={this.getChapter()}>
         </div>
-        <div style={ {position: 'fixed', left: '80%', top:'20px'} } className="Buttons" id="Buttons">
+        <div className={classname} id="Buttons">
           {(this.state.hasPrev)?<a onClick={this.clickPrev}><img height='50px' src="/static/img/backward.png"/></a>:null}
           {(this.state.hasNext)?<a onClick={this.clickNext}><img height='50px' src="/static/img/forward.png"/></a>:null}
         </div>

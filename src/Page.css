@@ -4,3 +4,15 @@
 .Page-mobile {
   padding-top: 45px;
 }
+
+.ButtonsDesktop {
+  position: fixed;
+  left: 80%;
+  top:20px;
+}
+
+.ButtonsMobile {
+  position: fixed;
+  left: 60%;
+  top:20px;
+}

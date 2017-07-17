@@ -8,6 +8,7 @@
 
 # production
 /build
+/public/reasons
 
 # misc
 .DS_Store
